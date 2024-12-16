@@ -2,6 +2,7 @@
 console.log('hello');
 const deleteProduct = document.getElementsByClassName('delete-button');
 const deleteType = document.getElementsByClassName('delete-type-btn');
+const deleteFieldBtn = document.getElementsByClassName("deleteBtn")
 const deleteBrand = document.getElementsByClassName('delete-brand-btn');
 const addProductCart = document.getElementsByClassName('add_product_to_cart');
 const indicator = document.getElementById('indicator');
@@ -113,11 +114,19 @@ add_product_field?.addEventListener("click", (e) => {
     deleteButton.innerText = "X";
     deleteButton.type = "button";
     deleteButton.addEventListener("click", (e) => {
-        [inputFieldName, inputFieldValue, inputFieldId, br, e.target].forEach(el => el.remove());
+      console.log("hello");
+        inputFieldName.remove();
+        inputFieldValue.remove();
+        inputFieldId.remove();
+        br.remove();
+        e.target.remove();
+        console.log("hello");
     });
 
     parent.append(br, inputFieldId, inputFieldName, inputFieldValue, deleteButton);
 });
+
+
 
 // Toggle between list and grid views
 list?.addEventListener("click", () => {
@@ -433,3 +442,29 @@ addButton.addEventListener('click', (e) => {
   });
   e.target.value = number;
 })
+
+
+
+for (deleteFields of deleteFieldBtn) {
+  //console.log(deleteField)
+  deleteFields?.addEventListener("click", (e) => {
+    e.preventDefault();
+    const parentElement = e.target.parentNode;
+    parentElement.remove();
+    e.target.remove();
+
+    /*if (!confirm('Do you want to delete field?')) {
+            return
+        }
+
+        if(e.target.dataset.fieldid){
+            console.log(e.target.dataset.fieldid)
+            removeField(e.target.dataset.fieldid)
+                .then((data) => {
+                    if (data.status === 'OK') {
+                        window.location.reload()
+                    }
+            })
+        }*/
+  });
+}

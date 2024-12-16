@@ -229,14 +229,16 @@ module.exports = class Product {
     }
 
     static async updateType(productType){
-        const data = `UPDATE own_work.types SET type= '${productType.type}', parent_type=${productType.parent_type} WHERE id=${productType.id}`
+        const data = `UPDATE own_work.types SET type= '${productType.name}', parent_type=${productType.parent_type} WHERE id=${productType.id}`
         
         const value = await db.execute(data)
 
-            //console.log(data)
-        if(value[0][0]){
-            return value[0][0]
+            console.log('value',productType)
+        if(value[0]){
+            return value[0]
         }
+
+        return null
         /*[
             productType.type,
             productType.id,
@@ -556,9 +558,10 @@ module.exports = class Product {
     }
 
     static async addBrand(brand){
+        console.log('brand',brand)
         return await db.execute('INSERT INTO own_work.brands (brands) VALUE (?)',
         [
-            brand
+            brand.name
         ])
     }
     
@@ -578,7 +581,7 @@ module.exports = class Product {
     }
 
     static async updateBrand(brands){
-        const data = `UPDATE own_work.brands SET brands = '${brands.brand}' WHERE id=${brands.id}`
+        const data = `UPDATE own_work.brands SET brands = '${brands.name}' WHERE id=${brands.id}`
         
         const value = await db.execute(data)
 

@@ -1,9 +1,9 @@
 <%- include('../layout/header.ejs') %>
     <h1><%= title%></h1>
-    <form class="product-form" method="POST" action="/admin/brands/<%= getBrand.id %>">
+    <form class="product-form" method="POST" action="/admin/brands/<%= getBrand[0].id %>">
         <div class="form-controls">
             <label for="name">Name</label>
-                <input id="name" name="brand" value="<%= getBrand.brands %>">
+                <input id="name" name="brand" value="<%= getBrand[0].brands %>">
         </div>
   
         

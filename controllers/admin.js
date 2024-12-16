@@ -357,7 +357,7 @@ const editPostType = async (req, res) => {
     id: req.params.typeId
   };
 
-  const result = await Products.editType(typesName);
+  const result = await Products.updateType(typesName);
   console.log("type name", typesName);
   console.log("result", result);
   res.redirect("/admin/types");
@@ -386,7 +386,7 @@ const editPostBrand = async (req, res) => {
     id: req.params.brandId
   };
 
-  const result = await Products.editBrand(brandInfo);
+  const result = await Products.updateBrand(brandInfo);
   console.log("type name", brandInfo);
   console.log("result", result);
   res.redirect("/admin/brands");
