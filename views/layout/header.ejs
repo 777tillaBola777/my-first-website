@@ -144,30 +144,46 @@
               <li class="nav-item">
                 <a class="navbar-link" href="#">Pages</a>
               </li>
-              <li  class="nav-item">
-                <%if(locals?.userExists?.isAdmin === 1){%>
-                  <% console.log('admin',locals.keyword)%>
-                <form class="d-flex" id="search_form" role="search" method="GET" action="/admin/products">
-                  <input style="width: 300px; height: 45px" name="keyword" value="<%=locals.keyword%>" id="searched_value" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                  <input name="sort_by" type="hidden" id="valuable" value="<%=locals.sortby%>" />
-                  <!--<input name="sort_direction" type="hidden" id="value2" value="" />-->
-                  <button class="btn btn-outline-success" type="submit">
-                    Search
-                  </button>
-                </form>
-                <%} else {%>
+              <li class="nav-item">
+                <% if (locals?.userExists?.isAdmin === 1) { %>
+                  <% console.log('admin', locals.keyword) %>
+                  <form class="d-flex" id="search_form" role="search" method="GET" action="/admin/products">
+                    <input 
+                      style="width: 300px; height: 45px;" 
+                      name="keyword" 
+                      value="<%= locals.keyword %>" 
+                      id="searched_value" 
+                      class="form-control me-2" 
+                      type="search" 
+                      placeholder="Search" 
+                      aria-label="Search" 
+                    />
+                    <input name="sort_by" type="hidden" id="valuable" value="<%= locals.sortby %>" />
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                  </form>
+                <% } else { %>
                   <form class="d-flex" id="search_form" role="search" method="GET" action="/products">
                     <div style="position: relative; width: 300px;">
+                      <!-- Search input field -->
                       <input 
-                        style="width: 100%; height: 45px; padding-right: 30px;" 
+                        style="width: 100%; height: 45px; padding-right: 50px;" 
                         name="keyword" 
-                        value="<%=locals.keyword%>" 
+                        value="<%= locals.keyword %>" 
                         id="searched_value" 
                         class="form-control me-2" 
                         type="search" 
                         placeholder="Search" 
                         aria-label="Search" 
                       />
+              
+                      <!-- Voice search button styled as a mic -->
+                      <span 
+                        id="voice-search-btn" 
+                        style="position: absolute; right: 40px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 20px; color: #888;" 
+                        title="Click to speak">
+                        🎤
+                      </span>
+              
                       <!-- Clear button styled as 'x' -->
                       <span 
                         id="clear-btn" 
@@ -175,14 +191,12 @@
                         ×
                       </span>
                     </div>
-                    <input name="sort_by" type="hidden" id="valuable" value="<%=locals.sortby%>" />
-                    <button class="btn btn-outline-success" type="submit">
-                      Search
-                    </button>
+                    <input name="sort_by" type="hidden" id="valuable" value="<%= locals.sortby %>" />
+                    <button class="btn btn-outline-success" type="submit">Search</button>
                   </form>
-                  
-                <%}%>
+                <% } %>
               </li>
+              
               <li>
                 <div class="cont">
                   <a
