@@ -1,0 +1,203 @@
+<%- include('layout/header.ejs') %>
+<form id="sendForm" method="GET" action="/types/<%= locals.typeName%>">
+  <div class="big-div">
+    <div><h1 style="margin: 0; line-height: 100px">Product page</h1></div>
+    <div class="select-box">
+      <div>
+        <select name="change_by_something" id="selectBoxSend">
+          <option value="">--Select--</option>
+              <option <%if(locals.selectBoxValue === 'seen high') {%> selected <%}%> value="seen high">Popular</option>
+              <option <%if(locals.selectBoxValue === 'price low') {%> selected <%}%> value="price low">Cheaper</option>
+              <option <%if(locals.selectBoxValue === 'price high') {%> selected <%}%> value="price high">Expensive</option>
+              <option <%if(locals.selectBoxValue === 'created high') {%> selected <%}%> value="created high">New</option>
+        </select>
+      </div>
+      <div class="setting"><a id="makeBigger" href="#"><img class="img-filter" src="https://cdn-icons-png.flaticon.com/512/4502/4502383.png"></a>  filter</div>
+    </div>
+  </div>
+
+  <div style="text-decoration: underline; background-color: grey; height: 1px"></div>
+
+  <div class="father-div">
+    <div>
+    <h2 style="margin-top: 0">Categories</h2>
+    <div><a href="<%= menu[0].url%>">Home</a></div>
+    <%if(getTypes?.length > 0) {%> <%getTypes?.forEach((item) => {%>
+      <input type="hidden" name="types" value="<%= item.id %>" />
+      <div style="padding-left: 10px">
+        <a href="/types/<%= item.type%>"><%= item.type%></a>
+      </div>
+      <div id="types"></div>
+      <%})%> <%}%>
+  
+      <div style="padding-top: 15px; padding-bottom: 15px">
+        <h2 style="display: inline; padding-right: 65px">Cost</h2>
+        <%if(prices.price1 && prices.price2 || prices.price1 || prices.price2){%>
+        <input id="resetBtn" class="btn btn-primary" type="reset" value="Reset" />
+        <%}%>
+      </div>
+  
+      <div style="display: grid; grid-template-columns: auto auto">
+        <div>
+          <input style="width: 120px;" placeholder="from" id="price1"
+    
+           value="<%= prices.price1%>"
+          name="price1" type="number">
+        </div>
+        <div>
+          <input style="width: 120px;" placeholder="to" id="price2"
+           value="<%= prices.price2%>"
+          name="price2" type="number">
+        </div>
+      </div>
+      <%if(searchProductResult?.length > 0) {%>
+      <div style="padding-bottom: 15px; padding-top: 20px">
+        <h2 style="display: inline; padding-right: 50px">Brand</h2>
+        <%if(existId[0] !== undefined){%>
+        <input
+          id="resetBrandBtn"
+          class="btn btn-primary"
+          type="reset"
+          value="Reset"
+        />
+        <%}%>
+      </div>
+  
+          <%if(getBrands?.length > 0) {%> 
+            <%getBrands?.forEach((item1, index1) => {%>
+              <%if(existId?.length) {%>
+                <% let checked = '' %> 
+                <%existId?.forEach((item, index) => {%>
+                  <%if(+item1.id === +item){%> 
+                    <%checked = 'checked'%> 
+                  <%}%>
+                <%})%>
+  
+                  
+                  <div>
+                    <input type="checkbox" <%= checked %> class="checkBox" name="brands" value="<%= item1.id%>"> <%= item1.brands%>
+                  </div>
+              
+                <%} else {%>
+                  <div>
+                    <input type="checkbox" class="checkBox" name="brands" value="<%= item1.id%>"/> <%= item1.brands%>
+                  </div>
+              
+                <%}%>
+            <%})%>
+              <%}%>
+          <%}%> 
+  
+
+  <div id="brands"></div>
+    <%if(existId[0] !== undefined || prices.price1 && prices.price2 || prices.price1 || prices.price2){%>
+    <div style="margin: 0 auto; padding-top: 25px; width: 205px">
+      <button
+        id="cleanBut"
+        style="padding-left: 80px; padding-right: 80px"
+        type="button"
+        class="btn btn-outline-danger"
+      >
+        Clean
+      </button>
+    </div>
+    <%}%>
+    <div style="padding-top: 30px">
+      <button class="back-btn" id="backBtn">Back to page</button>
+    </div>
+  </div>
+
+  <%if(searchProductResult?.length > 0) {%>
+    <div>
+      <div id="productDiv" class="product-div">
+        <% searchProductResult?.forEach((item, index) => { %>
+        <div class="item" style="position: relative">
+          <div>
+            <a class="a-href" href="/about-item/<%= item.id%>"
+              ><%= item.name %></a
+            >
+          </div>
+          <div>
+            <a href="/about-item/<%= item.id%>">
+              <%if(item.featured?.length > 0){%>
+              <div class="featured"><%= item?.featured %></div>
+              <%}%>
+              <img class="pro-style" src="<%= item.image %>" />
+            </a>
+          </div>
+  
+          <div><%= item.price %></div>
+          <div class="garage-row"><%= item.description%></div>
+          <button type="button" class="add_product_to_cart" data-productId="<%= item.id%>">
+            <svg
+             
+              data-productId="<%= item.id%>"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              class="ui-icon add-cart-icon"
+            >
+              <path
+                data-productId="<%= item.id%>"
+                d="M8 10V8H6V12.5C6 12.7761 5.77614 13 5.5 13C5.22386 13 5 12.7761 5 12.5V7H8C8 4.59628 9.95227 3 12 3C14.0575 3 16 4.70556 16 7H19V19.5C19 20.3284 18.3284 21 17.5 21H12.5C12.2239 21 12 20.7761 12 20.5C12 20.2239 12.2239 20 12.5 20H17.5C17.7761 20 18 19.7761 18 19.5V8H16V10H15V8H9V10H8ZM12 4C10.4477 4 9 5.20372 9 7H15C15 5.29444 13.5425 4 12 4Z"
+                fill="black"
+              ></path>
+              <path
+                data-productId="<%= item.id%>"
+                d="M7.5 14C7.77614 14 8 14.2239 8 14.5V17H10.5C10.7761 17 11 17.2239 11 17.5C11 17.7761 10.7761 18 10.5 18H8V20.5C8 20.7761 7.77614 21 7.5 21C7.22386 21 7 20.7761 7 20.5V18H4.5C4.22386 18 4 17.7761 4 17.5C4 17.2239 4.22386 17 4.5 17H7V14.5C7 14.2239 7.22386 14 7.5 14Z"
+                fill="black"
+              ></path>
+            </svg>
+          </button>
+        </div>
+        <%})%>
+      </div>
+      <div style="padding-top: 30px; text-align: center">
+        <button
+          type="button" id="addIndexBtn"
+          data-address="<%= locals.typeName%>"
+          name="index_number"
+          value="5"
+          class="btn btn-primary"
+          data-toggle="collapse"
+          data-target="#demo"
+        >
+          Show more
+        </button>
+      </div>
+    </div>
+  
+    <%} else {%>
+  
+    <div>
+      <h2 style="text-align: center">
+        Siz ko'rsatgan filter bo'yicha mahsulot topilmadi
+      </h2>
+      <div style="margin: 0 auto; padding-top: 25px; width: 205px">
+        <button
+          id="cleanButton"
+          style="padding-left: 80px; padding-right: 80px"
+          type="button"
+          class="btn btn-outline-danger"
+        >
+          Cancel filter
+        </button>
+      </div>
+    </div>
+    <%}%>
+</div>
+
+</form>
+
+<input
+    type="hidden"
+    id="usedValue"
+    name="used_value"
+    value="<%= productUsed[0].used%>"
+  />
+  <%console.log(productUsed)%>
+  
+<%- include('layout/footer.ejs') %>
+

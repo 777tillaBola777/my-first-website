@@ -1,0 +1,43 @@
+<%- include('layout/header.ejs') %>
+
+<section id="login">
+  <form action="register" method="post" style="border-color: #66bfbf">
+
+    <%if(message[0]?.message) {%>
+      
+      <div class="alert alert-warning" role="alert">
+        <h1><%=message[0].message %></h1>
+      </div>
+      
+    <%}%>
+    <div class="container logindiv">
+      <h1 class="logintitle">Register</h1>
+      <div class="inp">
+        <label>Username: </label>
+        <input type="text" placeholder="Enter Username" name="uname" required />
+      </div>
+      <div class="inp">
+        <label>Password: </label>
+        <input
+          type="password"
+          placeholder="Enter Password"
+          name="pw"
+          required
+        />
+      </div>
+
+      <p class="textp">
+        Already a member ?
+        <a href="/login" class="to_regeister">Go and Log in</a>
+      </p>
+
+      <div class="loginbutton">
+        <button class="singlebutton btn btn-primary" type="submit">
+          Register
+        </button>
+      </div>
+    </div>
+  </form>
+</section>
+
+<%- include('layout/footer.ejs') %>

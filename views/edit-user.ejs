@@ -1,0 +1,17 @@
+<%- include('layout/header.ejs') %>
+<h1><%= title%></h1>
+<form class="product-form" method="POST" action="/account">
+  <div class="form-controls">
+    <label for="username">username</label>
+    <input
+      id="username"
+      name="username"
+      value="<%= locals.userExists?.username %>"
+    />
+  </div>
+
+  <div class="form-controls">
+    <button type="submit">Update</button>
+  </div>
+</form>
+<%- include('layout/footer.ejs') %>

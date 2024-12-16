@@ -1,0 +1,22 @@
+<%- include('../layout/header.ejs') %>
+ 
+   
+<form class="product-form" method="POST" action="/admin/edit-user/<%= locals.userIsValid[0].id %>">
+    <div>username: <%= locals.userIsValid[0].username%></div>
+    <div style="padding-bottom: 10px;padding-top: 10px;">Type:  </div> 
+    <%console.log(userIsValid)%>
+    <div><input  name="type" type="radio" value="0" <%if(userIsValid[0].isAdmin === 0) {%>checked<%}%>> user </div>
+    <div><input  name="type" type="radio" value="1" <%if(userIsValid[0].isAdmin === 1) {%>checked<%}%>> admin </div>
+
+    <div  style="padding-bottom: 5px; padding-top: 10px;">Blocked: </div> 
+    <div  style="padding-bottom: 10px;" ><input  name="blocked" type="checkbox" value="true" <%if(userIsValid[0]?.blocked === 'true') {%>checked<%}%>> blocked </div>
+
+
+    <div  style="padding-bottom: 10px;">Note: <input  name="note" type="text" value="<%= locals.userIsValid[0].note %>"></div>
+
+    <div class="form-controls">
+        <button type="submit">Update</button>
+    </div>
+</form>
+    
+<%- include('../layout/footer.ejs') %>

@@ -1,0 +1,27 @@
+<%- include('../layout/header.ejs') %>
+    <h1><%= title%></h1>
+      <table class="table table-striped">
+        <thead>
+            <tr>
+                <th style="padding-left: 25px;" scope="col">Username</th>
+                <th scope="col">Is admin</th>
+                <th scope="col">Note</th>
+                <th scope="col">Blocked</th>
+                <th scope="col">Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            <%users.forEach((item, index) => {%>
+                <%console.log(userExists?.username, item?.username)%>
+                <%if(userExists?.username !== item?.username){%>
+                <tr>
+                    <td style="font-size: 20px; padding-left: 25px;"><%= item.username %></td>
+                    <td><%if(item.isAdmin === 0){%>No<%} else {%> Yes <%}%></td>
+                    <td><%= item.note %></td>
+                    <td><%= item.blocked %></td>
+                    <td><a class="aHref" href="/admin/edit-user/<%= item.id%>" data-userId="<%= item.id%>">Edit</a></td>
+                </tr>
+                <%}%>
+            <%})%>
+        </table>
+<%- include('../layout/footer.ejs') %>

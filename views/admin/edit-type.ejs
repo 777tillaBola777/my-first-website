@@ -1,0 +1,27 @@
+<%- include('../layout/header.ejs') %>
+    <h1><%= title%></h1>
+    <form class="product-form" method="POST" action="/admin/types/<%= getType.id %>">
+        <div class="form-controls">
+            <label for="name">Name</label>
+                <input id="name" name="type" value="<%= getType.type %>">
+        </div>
+
+       <select name="typeOptions">
+            <option value="0">no parent</option>
+            <%types.forEach((item) => {%>
+                <%console.log(getType.parent_type, item.id)%>
+                <option <%if(getType.id === item.id){%>  style="display: none;" <%}%> <%if(+getType.parent_type === item.id){%>  selected <%}%>  value="<%=item.id%>"><%=item.type%></option>
+            <%})%>
+        </select> 
+  
+        
+        <div class="form-controls">
+            <button type="submit">Update</button>
+        </div>
+    </form>
+
+    
+   
+    
+    
+<%- include('../layout/footer.ejs') %>

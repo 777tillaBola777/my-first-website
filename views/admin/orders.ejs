@@ -1,0 +1,68 @@
+<%- include('../layout/header.ejs') %>
+    <h1><%= title%> </h1>
+<form method="GET" action="/admin/orderPage">
+    <div class="select-grid">
+        <div>
+            <select name="payment_type" id="type">
+                <option <%if(locals.status[0] === '') {%> selected <%}%>  value="">--select payment type--</option>
+                <option <%if(locals.status[0] === 'In-cash') {%> selected <%}%>  value="In-cash">In cash</option>
+                <option <%if(locals.status[0] === 'Credit-card') {%> selected <%}%>  value="Credit-card">Credit card</option>
+            </select>
+        </div>
+        <div>
+            <select name="taking_form"  id="take">
+                <option <%if(locals.status[1] === '') {%> selected <%}%> value="">--select taking form--</option>
+                <option <%if(locals.status[1] === 'Delivery') {%> selected <%}%> value="Delivery">Delivery</option>
+                <option  <%if(locals.status[1] === 'Pick up') {%> selected <%}%> value="Pick up">Pick up</option>
+            </select>
+        </div>
+        <div>
+            <select name="status"  id="statusBox">
+                <option <%if(locals.status[2] === '') {%> selected <%}%> value="">--select status--</option>
+                <option <%if(locals.status[2] === 'new') {%> selected <%}%>  value="new">new</option>
+                <option <%if(locals.status[2] === 'proccessing') {%> selected <%}%> value="proccessing">proccessing</option>
+                <option <%if(locals.status[2] === 'ready for shipping') {%> selected <%}%> value="ready for shipping">ready for shipping</option>
+                <option <%if(locals.status[2] === 'shipped') {%> selected <%}%> value="shipped">shipped</option>
+                <option <%if(locals.status[2] === 'delivered') {%> selected <%}%> value="delivered">delivered</option>
+            </select>
+        </div>
+    </div>
+    <button type="submit">submit</button>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Payment type</th>
+            <th scope="col">Taking form</th>
+            <th scope="col">Date</th>
+            <th scope="col">Status</th>
+            <th scope="col">Count</th>
+        </tr>
+    </thead>
+    <tbody>
+    <% orders.forEach((item, index) => { %>
+        <tr>
+            <th scope="row"><a class="a" href="/admin/order/<%= item.id%>"><%= item.id %></a></th>
+            <%if(item.payment_type === 'In-cash') {%>
+                <td><img style="width: 35px;" src="https://www.nicepng.com/png/detail/135-1358865_-cash-icon-png-cash-out.png">  <%= item.payment_type %></td>
+            <%} else {%>
+                <td><img style= "width: 30px" src="https://www.nicepng.com/png/detail/301-3017281_mastercard-credit-card-icon-credit-card.png"> <%= item.payment_type %></td>
+            <%}%>   
+            
+            <%if(item.taking_form === 'Pick up') {%>
+                <td><img style="width: 35px;" src="https://png.pngtree.com/png-vector/20190411/ourmid/pngtree-vector-hand-icon-png-image_927399.jpg"><%= item.taking_form%></td>
+            <%} else {%>
+                <td><img style="width: 35px;" src="https://www.iconpacks.net/icons/1/free-truck-icon-1058-thumb.png"><%= item.taking_form%></td>
+            <%}%> 
+            
+            <td  title="<%= item.created %>"><%= item.createdHumanReadable%></td>  
+            <td><%= item.status %></td>
+            <td><%= item.count %></td>
+        </tr>
+    <%}) %>
+    </tbody>
+    </table>
+
+<%- include('../layout/footer.ejs') %>

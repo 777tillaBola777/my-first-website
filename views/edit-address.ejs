@@ -1,0 +1,56 @@
+<%- include('layout/header.ejs') %>
+<h1><%= title%></h1>
+<form class="product-form" method="POST" action="/about-address/<%= getUserAddress?.id%>">
+<div class="contacts">
+     
+        <div>
+            <label for="address">Address</label>
+            <input id="address" name="address" value="<%= getUserAddress?.address %>">
+        </div>
+        <div>
+          <label for="phone_number">Phone number</label>
+          <input id="phone_number" name="phone_number" value="<%= getUserAddress?.phone_number %>">
+      </div>
+   
+    <div>
+      <label for="firstname">Firstname</label>
+      <input id="firstname" name="firstname" value="<%= getUserAddress?.firstname %>">
+  </div>
+  <div>
+    <label for="lastname">Lastname</label>
+    <input id="lastname" name="lastname" value="<%= getUserAddress?.lastname %>">
+</div>
+<div>
+                
+  <label>Country</label>
+  <select id="selectbox" class="selectpicker" data-live-search="true" name="country">
+    <option value="">--Select country--</option>
+    <%countries?.forEach((item) => {%>
+      <%
+                    let selectedCountry = ''
+                    if (getUserAddress?.country === item.name) {
+                      selectedCountry = 'selected'
+                      
+                    }
+                    %>
+      <option <%= selectedCountry%> value="<%= item.name%>"> <%= item.name %> </option>
+    <%})%>
+  </select>
+</div>  
+  
+</div>
+
+
+
+
+<div>
+  <button type="submit">Update</button>
+</div>
+
+
+
+
+</form>
+
+
+<%- include('layout/footer.ejs') %>

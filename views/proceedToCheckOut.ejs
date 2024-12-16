@@ -1,0 +1,104 @@
+<%- include('layout/header.ejs') %>
+<h1><%= title%></h1>
+<div class="container1" id="class">
+  <div class="item">
+    <h3>Shipping Address</h3>
+    <div class="item1">
+      <div class="container container-lg">
+        <form id="proceed_checkout" class="row g-3" method="POST" action="/orders">
+          <div class="col-md-6">
+            <input name="ids" id="idInput" type="hidden" />
+            <input type="text" class="form-control" name="firstname" id="inputPassword4" placeholder="First Name" />
+          </div>
+          <div class="col-md-6">
+            <input type="text" class="form-control" name="lastname" id="inputPassword4" placeholder="Last Name" />
+          </div>
+          <!---->
+          <div class="col-md-6">
+            <input type="text" class="form-control" name="phone_number" id="inputPassword4" placeholder="Phone Number"/>
+          </div>
+
+
+          <p>Taking form:</p>
+          <div class="col-12">
+            <div class="form-check">
+              <input class="form-check-input" name="taking_form" type="radio" value="Pick up" id="pickUp"/>
+              <label class="form-check-label" for="gridCheck"> Pick up </label>
+            </div>
+
+            <div class="form-check">
+              <input class="form-check-input" name="taking_form" type="radio" value="Delivery" id="Delivery"/>
+              <label class="form-check-label" for="gridCheck"> Delivery </label>
+            </div>
+          </div>
+
+          <div id="hidden" class="hidden">
+            <div class="col-12">
+              <label for="inputAddress" class="form-label">Address</label>
+              <input type="text" name="address" class="form-control" id="inputAddress" placeholder="1234 Main St"/>
+            </div>
+
+            <div class="col-md-6">
+                
+              <label>Country:</label>
+              <select id="selectbox" class="selectpicker" data-live-search="true" name="country">
+                <option value="">--Select country--</option>
+                <%countries.forEach((item) => {%>
+                  <option value="<%= item.name%>"><%= item.name%></option>
+                <%})%>
+              </select>
+      </div>
+      
+
+      
+            <div class="col-md-4">
+              <label for="inputState" class="form-label">City</label>
+              <input type="text" name="city" class="form-control" id="inputState"/>
+            </div>
+            <div class="col-md-2">
+              <label for="inputZip" class="form-label">Zip</label>
+              <input type="text" name="zip" class="form-control" id="inputZip"/>
+            </div>
+          </div>
+
+          <p>Paying form:</p>
+          <div class="col-md-6">
+            <div class="form-check">
+              <input class="form-check-input" name="payment_type" type="radio" value="In-cash" id="inCash" />
+              <label class="form-check-label" for="gridCheck">In cash</label>
+            </div>
+    
+            <div class="form-check">
+              <input class="form-check-input" name="payment_type" type="radio" value="Credit-card" id="CreditCard" />
+              <label class="form-check-label" for="gridCheck">Credit card</label>
+            </div>
+          </div>
+    
+          <!-- Conditionally shown Stripe card input when Credit Card is selected -->
+          <div id="card-container" style="display: none;">
+            <h4>Enter Credit Card Details</h4>
+            <div id="card-element"></div>
+            <div id="card-errors" role="alert"></div>
+          </div>
+    
+          
+
+          <div class="col-12">
+            <button id="submitBtn" type="submit" class="btn btn-primary">
+              Proceed to Payment
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="item">
+    <h3>Order Summary</h3>
+    <div id="item2" class="item2"></div>
+  </div>
+</div>
+
+<script src="/js/cart.js"></script>
+<script src="/js/proceedTocheckout.js"></script>
+<script src="/js/payment.js"></script>
+<%- include('layout/footer.ejs') %>

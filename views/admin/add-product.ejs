@@ -1,0 +1,54 @@
+<%- include('../layout/header.ejs') %>
+<h1><%= title%></h1>
+
+<form class="product-form" method="POST" action="/admin/products/add">
+    <div class="form-controls">
+        <label for="name">Name</label>
+        <input id="name" name="name">
+    </div>
+    <div class="form-controls">
+        <label for="type">Type</label>
+        <select id="type" name="type_id">
+            <option value="">--Select product type--</option>
+            <% types.forEach((item) => { %>
+                <option value="<%= item.id %>"><%= item.type %></option>
+            <%}) %>
+        </select>
+    </div>
+    <div class="form-controls">
+        <label for="price">Price</label>
+        <input id="price" name="price" type="number">
+    </div>
+    <div class="form-controls">
+        <label for="image">Image URL</label>
+        <input id="image" name="image" type="url">
+    </div>
+    <div class="form-controls">
+        <label for="brand">Brand</label>
+        <select id="brand" name="brand_id">
+            <option value="">--Select product brand--</option>
+            <% brands.forEach((item) => { %>
+                <option value="<%= item.id %>"><%= item.brands %></option>
+            <%}) %>
+        </select>
+    </div>
+    <div class="form-controls">
+        <label for="featured">Featured</label>
+        <input name="featured" type="checkbox" value="featured">
+    </div>
+
+    <div class="form-controls">
+        <label for="description">description</label>
+        <textarea id="description" name="description" rows="6" cols="28"></textarea>
+    </div>
+    
+    <div class="form-controls">
+        <button type="button" id="add_product_field">Add field</button>
+    </div>
+    
+    <div class="form-controls">
+        <button type="submit">Add</button>
+    </div>
+</form> 
+
+<%- include('../layout/footer.ejs') %>

@@ -1,0 +1,295 @@
+const checkOutForm = document.getElementById('proceed_checkout')
+//const keyValue = JSON.parse(localStorage.getItem('cartProducts'))
+//const myIndex = keyValue?.quantity ?? ''
+//const noSign = document.getElementById('noSign')
+
+const cartProducts = JSON.parse(localStorage.getItem('cartProducts')) || { products: [] };
+
+
+keyValue?.products.forEach((item, index) => {
+    b.push(item.id)
+})
+
+
+function ariphmetica(a, b){
+    return a * b
+}
+//console.log('hello')
+
+if(b.length){
+  let totalValue = 0
+    const a = getProductId(b)
+    a.then((data) => {
+        data.forEach(element => {
+            cartProducts.products.forEach((item) => {
+                if(element.id === +item.id && +item.quantity >= 1) {
+                    totalValue += ariphmetica(+element.price, item.quantity)
+                    console.log(totalValue)
+                }
+               // console.log(div)
+                div.innerHTML = '<h4><b>The total cost is: ' + totalValue + '$</b></h4>'
+            })
+        });
+    })
+} else {
+    console.log('yo\'q')
+}
+
+function addFacilities(){
+    if(localStorage.getItem('firstRadio')){
+        valueContainer?.classList.remove('block')
+        valueContainer?.classList.add('hidden')
+        localStorage.removeItem('secondRadio')
+    } else {
+        valueContainer?.classList.add('block')
+        valueContainer?.classList.remove('hidden')
+    }
+}
+
+function addSecondFacilities(){
+    if(localStorage.getItem('in-cash')){
+        localStorage.removeItem('credit-card')
+    } 
+}
+
+const valueContainer = document.getElementById('hidden')
+const pickUp = document.getElementById('pickUp')
+
+pickUp?.addEventListener('change', (e) => {
+	localStorage.setItem('firstRadio', e.target.checked ? true : '')
+    addFacilities()
+})
+
+const firstRadio = localStorage.getItem('firstRadio')
+if (firstRadio) {
+	pickUp ? pickUp.checked = true : ''
+    addFacilities()
+} else {
+    console.log(b.length)
+}
+
+const deliveryRadio = document.getElementById('Delivery')
+
+
+deliveryRadio?.addEventListener('change', (e) => {
+	localStorage.setItem('secondRadio', e.target.checked ? true : '')
+    localStorage.removeItem('firstRadio')
+    addFacilities()
+})
+
+const secondRadio = localStorage.getItem('secondRadio')
+if (secondRadio) {
+	deliveryRadio.checked = true
+    addFacilities()
+} else {
+    console.log('yoq')
+}
+
+
+const inCash = document.getElementById('inCash')
+
+inCash?.addEventListener('change', (e) => {
+	localStorage.setItem('in-cash', e.target.checked ? true : '')
+    addSecondFacilities()
+})
+
+const secondCash = localStorage.getItem('in-cash')
+if (secondCash) {
+	inCash.checked = true
+    addSecondFacilities()
+} else {
+    console.log('yoq')
+}
+
+const CreditCard = document.getElementById('CreditCard')
+const cardContainer = document.getElementById('card-container')
+
+CreditCard?.addEventListener('change', (e) => {
+	localStorage.setItem('credit-card', e.target.checked ? true : '')
+    localStorage.removeItem('in-cash')
+    cardContainer.style.display = 'block'
+    addSecondFacilities()
+})
+
+const secondCredit = localStorage.getItem('credit-card')
+if (secondCredit) {
+	CreditCard.checked = true
+    addSecondFacilities()
+} else {
+    console.log('yoq')
+}
+
+const getProductIds = async (productIds) => {
+    if(productIds){
+        const response = await fetch('/addUserDetails?id=' + productIds?.join(), {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        //console.log(response)
+        const b = response
+        return b
+    } else {
+        return 'hech narsa yo\'q'
+    }
+    
+}
+
+const submitedCart = document.getElementById('submitBtn')
+
+submitedCart?.addEventListener('click', () => {
+    localStorage.removeItem('cartProducts')
+})
+checkOutForm?.addEventListener('submit', function(e) {
+    e.preventDefault()
+    const hiddenInput = document.getElementById('idInput')
+    hiddenInput.value = (JSON.stringify(cartProducts))
+    e.target.submit()
+})
+
+//console.log('checkoutForm', checkOutForm)
+ // Verify the amount
+
+ let stripe;
+
+ async function createPaymentIntent(card, totalAmount) {
+  try {
+    console.log('Total Amount:', totalAmount);
+
+    // Send POST request to create a payment intent
+    const response = await fetch('/create-payment-intent', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ amount: totalAmount }) // Ensure totalAmount is passed correctly
+    });
+
+    // Check if the response is not okay
+    if (!response.ok) {
+      const errorText = await response.text(); // Read the error message if available
+      alert(`Error from server: ${errorText}`); // Log the error text
+      throw new Error(`Failed to create payment intent: ${errorText}`);
+    }
+
+    // Assuming response contains clientSecret
+    const { clientSecret } = await response.json();
+    console.log('Client Secret:', clientSecret);
+
+    // Confirm the payment using Stripe's confirmCardPayment method
+    const paymentResult = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: { card }
+    });
+
+    // Return payment result
+    return {
+      error: paymentResult?.error || null,
+      paymentIntent: paymentResult?.paymentIntent || null,
+    };
+  } catch (error) {
+    // Catch all errors and log them for debugging
+    console.error(`Error in createPaymentIntent: ${error}` );
+    alert(`Error in createPaymentIntent: ${error.message}`);
+
+    // Return a fallback error
+    return { error: error || new Error('An unknown error occurred'), paymentIntent: null };
+  }
+}
+
+
+
+
+
+async function calculateTotalValue(cartProducts, b) {
+  let totalValue = 0;
+
+  try {
+    const products = await getProductId(b);
+     // Fetch product details from the backend
+    for (const element of products) {
+      const matchingProduct = cartProducts?.products?.find(item => {
+        console.log(item.id, element.id); // Log item and element
+        return +item.id === +element.id; // Return the matching condition
+      });
+
+      if (matchingProduct && +matchingProduct.quantity >= 1) {
+        totalValue += ariphmetica(+element.price, matchingProduct.quantity);
+      }
+    }
+    console.log(totalValue)
+    return totalValue;
+  } catch (error) {
+    console.error('Error calculating total value:', error);
+    throw error;
+  }
+}
+
+(async function () {
+  try {
+    const totalValue = await calculateTotalValue(cartProducts, b);
+    console.log('Total Value:', totalValue);
+  } catch (error) {
+    console.error('Error calculating total value:', error);
+  }
+})();
+
+async function initializeStripe() {
+  try {
+    const response = await fetch('/get-stripe-key');
+    const data = await response.json();
+
+    stripe = Stripe(data.publishableKey);
+    const elements = stripe.elements();
+    const card = elements.create('card');
+    card.mount('#card-element');
+
+    card.on('change', (event) => {
+      const displayError = document.getElementById('card-errors');
+      displayError.textContent = event?.error ? event.error.message : '';
+    });
+
+
+    document.getElementById('proceed_checkout').addEventListener('submit', async (event) => {
+      event.preventDefault();
+    
+      if (document.getElementById('CreditCard').checked) {
+        try {
+          if (b.length) {
+            const totalValue = await calculateTotalValue(cartProducts, b); // Calculate total dynamically
+            console.log(totalValue)
+            const result = await createPaymentIntent(card, totalValue);
+    
+            if (!result || typeof result !== 'object') {
+              throw new Error('Invalid response from createPaymentIntent');
+            }
+    
+            const { error, paymentIntent } = result;
+    
+            if (error) {
+              alert(`my error: ${error}`)
+              document.getElementById('card-errors').textContent = error.message;
+            } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+              alert('Payment successful!');
+            } else {
+              alert('Unexpected response from payment processing.');
+            }
+          } else {
+            console.log('Cart is empty.');
+          }
+        } catch (error) {
+          alert(`Payment not submitted: ${error.message || 'An unknown error occurred'}`);
+          console.error('Payment processing error:', error);
+        }
+      } else {
+        checkOutForm.submit(); // Submit form for other payment methods
+      }
+    });
+    
+  } catch (error) {
+    alert(`Error fetching Stripe publishable key: ${error.message}`);
+  }
+}
+
+// Initialize Stripe on page load
+initializeStripe();

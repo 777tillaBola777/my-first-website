@@ -1,0 +1,129 @@
+<%- include('../layout/header.ejs') %>
+<div class="grid-container">
+    <div class="item1">
+        <h2><%= title%> #<%= orderId %></h2>
+        <form class="product-form" method="POST" action="/admin/order/<%= locals.order[0].order_id %>">
+            <div class="form-controls">
+                <dl>
+                    <dt>Created</dt>
+                    <dd title="<%= order[0].created %>"><%= locals.created%></dd>
+                    <%let paymentType = '' %>
+                    <%let takingForm = '' %>
+                    <% order.forEach((item) => { 
+                        paymentType = item.payment_type
+                        takingForm = item.taking_form
+                    }) %>
+                    <%console.log('12727', paymentType, takingForm)%>
+                    <dt>Payment_type</dt>
+                    <dd><%= paymentType %></dd>
+                    <dt>takingForm</dt>
+                    <dd><%= takingForm %></dd>
+                    <dt>status: <select name="selector" class="orders_change_status">
+                        <option <%if(locals.status === 'new'){%> selected <%}%> value="new">new</option>
+                        <option <%if(locals.status === 'proccessing') {%> selected <%}%> value="proccessing">proccessing</option>
+                        <option <%if(locals.status === 'ready for shipping') {%> selected <%}%> value="ready for shipping">ready for shipping</option>
+                        <option <%if(locals.status === 'shipped') {%> selected <%}%> value="shipped">shipped</option>
+                        <option <%if(locals.status === 'delivered') {%> selected <%}%> value="delivered">delivered</option>
+                    </select></dt>
+                </dl>
+            </div>
+            <div class="form-controls">
+                <button type="submit" class="btn btn-outline-primary">Update</button>
+            </div>
+        </form>
+    </div>
+    <div class="item2">
+        <h2>Consumer</h2>
+            <% consumer.forEach((item) => { %>
+                <dl>
+                    <dt>Firstname</dt>
+                    <dd><%= item.firstname %></dd>
+                    <dt>Lastname</dt>
+                    <dd><%= item.lastname %></dd>
+                    <dt>Phone number</dt>
+                    <dd><%= item.phone_number %></dd>
+                    <%console.log('index',order[0].taking_form === 'Delivery')%>
+                    <%if(order[0].taking_form === 'Delivery') {%>
+                        <dt>Country</dt>
+                        <dd><%= item.country %></dd>
+                        <dt>City</dt>
+                        <dd><%= item.city%></dd>
+                    <%}%>       
+                    <dt>Zip</dt>
+                    <dd><%= item.zip %></dd>
+                    
+            <%}) %>
+    </div>
+</div>
+
+
+
+
+      
+    <div style="padding-top: 50px;">
+        <h2 style="margin-bottom: 0;">Product</h2>
+            <div style="padding-top: 20px;">
+                <div class="contain">
+                    <div class="upper-inner-container">
+                        <div class="grid">
+                            <div style="padding: 10px;">
+                                <span style="font-size: 14px;">ORDERED PLACED</span>
+                                <div style="border: 0; color: #6C6D6F"><%= date%></div>
+                            </div>
+                            <div  style="padding: 10px;">
+                                <span style="font-size: 14px;">TOTAL</span>
+                                <div style="border: 0; color: #6C6D6F;"><%= totalPrice%> $</div>
+                            </div>
+                            <% consumer.forEach((item) => { %>
+                            <div  style="padding: 10px;">
+                                <span style="font-size: 14px;">SHIP TO</span>
+                                <div style="border: 0;"><a class="a" href="#"><%=item.firstname %> <%=item.lastname%></a></div>
+                            </div>
+                            <%})%>
+                            <div  style="padding: 10px;">
+                                <span style="font-size: 14px;">ORDER # <%= orderId %></span>
+                                <div style="border: 0;"><a class="a" href="#">View order details</a> | <a class="a" href="#">View invoice</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="padding: 10px;">
+                        <div class="grid-cont">
+                            <div>
+                                <h3>Delivered <%= dateDay%></h3>
+                                <p style="font-weight: 500;">Your package was handed to an agent for final delivery</p>
+                            </div>
+                            <div>
+                                <div style="margin: 7px;border: 1px solid #E0E0E0;border-radius: 5px;padding: 7px;text-align: center;">
+                                    <a style="color: black;text-decoration: none;padding-left: 83px;padding-right: 93px;padding-top: 8px;padding-bottom: 8px;color: black;text-decoration: none;" href="#">Get help</a>
+                                </div>
+                               
+
+                                <div  style="margin: 7px;border: 1px solid #E0E0E0;border-radius: 5px;padding: 7px;text-align: center;">
+                                    <a style="text-decoration: none;padding-left: 40px;padding-right: 40px;padding-top: 8px;padding-bottom: 8px;color: black;text-decoration: none;" href="#">Write a product review</a>
+                                </div>
+                            </div>
+                        </div>
+                    <% order.forEach((item) => { %>
+                        <div class="grid2">
+                            <a class="a" href="/about-item/<%= item.product_id%>"><img style="width: 100px; height: 120px;" src="<%= item.image%>"></a>
+                            <span style="color: black; position: absolute;"><a class="a" href="/about-item/<%= item.product_id%>"><%= item.name%></a></span>
+                            <span style="color: black; position: absolute; top:28px;">cost: <%= item.price%> $</span>
+                            <span style="color: black; position: absolute; top:46px;">count: <%= item.count%></span>
+                            <span style="color: black; position: absolute; top: 65px;"><p style="font-weight: 500;">Return window closed on date</p></span>
+                            <span style="color: black; position: absolute; top: 100px; left: 105px;">
+                                <a style="padding: 10px; text-decoration: none;border: 2px solid #FAD934; background: #FAD934; border-radius: 5px; color: black;" href="#">Buy it again</a>
+                                <a class="view-item" style="padding: 10px; text-decoration: none; border: 2px solid #E6E6E6; border-radius: 5px; color: black;" href="/about-item/<%= item.product_id%>">View your item</a>
+                            </span>
+                        </div>
+                    <%}) %>
+                    </div>
+                    
+                    
+                    <div class="lower-inner-container">
+                        <div style="padding: 10px;"><a class="a" href="#">Archive order</a></div>
+                    </div>
+                </div>
+            </div>
+            <!--<div>total cost: </div>-->
+        </div>   
+<%- include('../layout/footer.ejs') %>

@@ -1,0 +1,14 @@
+<%- include('../layout/header.ejs') %>
+    <h1><%= title%></h1>
+    <form class="product-form" method="POST" action="/admin/brands/add">
+        <div class="form-controls">
+            <label for="name">brand name</label>
+            <input id="name" name="brand">
+        </div>
+  
+
+        <div class="form-controls">
+            <button type="submit">Add</button>
+        </div>
+    </form>
+<%- include('../layout/footer.ejs') %>

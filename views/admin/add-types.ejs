@@ -1,0 +1,21 @@
+<%- include('../layout/header.ejs') %>
+    <h1><%= title%></h1>
+    <form class="product-form" method="POST" action="/admin/types/add">
+        <div class="form-controls">
+            <label for="name">Type name</label>
+            <input id="name" name="type">
+        </div>
+
+        <select name="typeOptions">
+            <option value="no parent">no parent</option>
+            <%types.forEach((item) => {%>
+                <option value="<%=item.id%>"><%=item.type%></option>
+            <%})%>
+        </select> 
+  
+
+        <div class="form-controls">
+            <button type="submit">Add</button>
+        </div>
+    </form>
+<%- include('../layout/footer.ejs') %>

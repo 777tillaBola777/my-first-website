@@ -1,0 +1,83 @@
+<%- include('../layout/header.ejs') %>
+    <h1><%= title%></h1>
+    <form class="product-form" method="POST" action="/admin/products/<%= locals.getPro.id %>">
+        <div>
+        <div class="form-controls">
+            <label for="name">Name</label>
+            <input id="name" name="name" value="<%= locals.getPro.name %>">
+        </div>
+        <div class="form-controls">
+            <label for="type">Type</label>
+            <select id="type" name="type_id">
+                <option value="">--Select product type--</option>
+                <% types.forEach((item) => { %>
+                    <%
+                    let selectedType = ''
+                    if (getPro.type_id === item.id) {
+                        selectedType = 'selected'
+                    }
+                    %>
+                    <option <%= selectedType %> value="<%= item.id %>"> <%= item.type %></option>
+                <%}) %>
+            </select>
+        </div>
+        <div class="form-controls">
+            <label for="price">Price</label>
+            <input id="price" name="price" type="number" value="<%= getPro.price %>">
+        </div>
+        <div class="form-controls">
+            <label for="image">Image URL</label>
+            <input id="image" name="image" type="url" value="<%= getPro.image %>">
+        </div>
+        <div class="form-controls">
+            <label for="brand">Brand</label>
+            <select id="brand" name="brand_id">
+                <option value="">--Select product brand--</option>
+                <% brands.forEach((item) => { %>
+                    <%
+                    console.log(getPro.brand_id, item.id)
+                    let selectedType = ''
+                    if (+getPro.brand_id === +item.id) {
+                        selectedType = 'selected'
+                    }
+                    %>
+                    <option <%= selectedType %> value="<%= item.id %>"> <%= item.brands %></option>
+                <%}) %>
+            </select>
+        </div>
+        <div class="form-controls">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" rows="6" cols="28"><%= getPro.description %></textarea>
+        </div>
+
+        <div class="form-controls">
+            <label for="featured">Featured</label>
+            <input name="featured" type="checkbox" <%if(getPro.featured === 'featured'){%> checked <%}%> value="featured">
+        </div>
+        
+        <div class="form-controls">
+            <button type="button" id="add_product_field">Add field</button>
+            <% if (product_fields.length) {
+                product_fields.forEach(field => { %>
+                <div>
+                    <br>
+                    <input class="field_id" name="field_id" value="<%= field.field_id %>" type="hidden" />
+                    <input class="field_name" name="field_name" value="<%= field.field_name %>" />
+                    <input class="field_value" name="field_value" value="<%= field.field_value %>" />
+                    <button type="button" class="deleteBtn" data-fieldid="<%= field.field_id %>" name="delete_row">x</button>
+                </div>
+                <% }) %>
+            
+            <% } %>
+        </div>
+        
+
+        <div class="form-controls">
+            <button type="submit">Update</button>
+        </div>
+    </div>
+    </form>
+
+    
+    
+<%- include('../layout/footer.ejs') %>

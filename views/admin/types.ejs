@@ -1,0 +1,37 @@
+<%- include('../layout/header.ejs') %>
+<h1><%= title%></h1>
+
+<p><b>Welcome to types page</b></p> 
+    <div class="form-controls">
+        <table class="table table-products">
+            <thead>
+                <th>types</th>
+                <th>parent types</th>
+                <th>Edit type</th>
+                <th>Using number</th>
+            </thead>
+            <tbody>
+            <% productTypes.forEach((item) => { %>
+                <tr>
+                    <td><%= item.type %></td>
+                    <%if(parentType[item.parent_type]){%>
+                        <td><%= parentType[item.parent_type] %></td>
+                    <%} else {%>
+                        <td>-</td>
+                    <%}%>    
+                    <td>
+                        <a href="/admin/types/<%= item.id%>">Edit</a>
+                        <%if(item.used === 0) {%>
+                            <a href="/admin/types/<%= item.id%>" data-typeid="<%= item.id%>" class="delete-type-btn">Delete</a>
+                        <%} else {%>
+                            <a href="/admin/types/<%= item.id%>" data-typeid="<%= item.id%>" class="delete-type-btn disabled-link">Delete</a>
+                        <%}%>    
+                    </td>
+                    <td><%= item.used %></td>
+                </tr>
+            <%}) %>
+            </tbody>
+            </table>
+    </div>
+
+<%- include('../layout/footer.ejs') %>

@@ -1,0 +1,157 @@
+<%- include('layout/header.ejs') %>
+<h1><%= title%></h1>
+
+<div>
+  <div class="container" id="container">
+    <div style="padding-top: 20px">
+      <div class="contain">
+        <div class="upper-inner-container">
+          <div class="grid">
+            <div style="padding: 10px">
+              <span style="font-size: 14px">ORDERED PLACED</span>
+              <div style="border: 0; color: #6c6d6f"><%= date%></div>
+            </div>
+            <div style="padding: 10px">
+              <span style="font-size: 14px">TOTAL</span>
+              <div style="border: 0; color: #6c6d6f"><%= totalPrice%>$</div>
+            </div>
+            <% consumer.forEach((item) => { %>
+            <div style="padding: 10px">
+              <span style="font-size: 14px">SHIP TO</span>
+              <div style="border: 0">
+                <a class="a" href="#"
+                  ><%=item.firstname %> <%=item.lastname%></a
+                >
+              </div>
+            </div>
+            <%})%>
+            <div style="padding: 10px">
+              <span style="font-size: 14px">ORDER # <%= orderId %></span>
+              <div style="border: 0">
+                <a class="a" href="#">View order details</a> |
+                <a class="a" href="#">View invoice</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="padding: 10px">
+          <div class="grid-cont">
+            <div>
+              <h3>Deliverey <%= dateDay%></h3>
+              <p style="font-weight: 500">
+                Your package was handed to an agent for final delivery
+              </p>
+            </div>
+            <div>
+              <div
+                style="
+                  margin: 7px;
+                  border: 1px solid #e0e0e0;
+                  border-radius: 5px;
+                  padding: 7px;
+                  text-align: center;
+                "
+              >
+                <a
+                  style="
+                    color: black;
+                    text-decoration: none;
+                    padding-left: 75px;
+                    padding-right: 75px;
+                    padding-top: 8px;
+                    padding-bottom: 8px;
+                    color: black;
+                    text-decoration: none;
+                  "
+                  href="#"
+                  >Get help</a
+                >
+              </div>
+
+              <div
+                style="
+                  margin: 7px;
+                  border: 1px solid #e0e0e0;
+                  border-radius: 5px;
+                  padding: 7px;
+                  text-align: center;
+                "
+              >
+                <a
+                  style="
+                    text-decoration: none;
+                    padding-left: 26px;
+                    padding-right: 26px;
+                    padding-top: 8px;
+                    padding-bottom: 8px;
+                    color: black;
+                    text-decoration: none;
+                  "
+                  href="#"
+                  >Write a product review</a
+                >
+              </div>
+            </div>
+          </div>
+          <% order.forEach((item) => { %>
+          <div class="grid2">
+            <a href="/about-item/<%= item.product_id%>"><img style="width: 100px; height: 120px" src="<%= item.image%>" /></a>
+            <span style="color: black; position: absolute">
+              <a class="a" href="/about-item/<%= item.product_id%>"><%= item.name%></a>
+              <%console.log('/about-item/',item.product_id)%>
+            </span>
+            <span style="color: black; position: absolute; top: 28px"
+              >cost: <%= item.price%>$</span
+            >
+            <span style="color: black; position: absolute; top: 46px"
+              >count: <%= item.count%></span
+            >
+            <span style="color: black; position: absolute; top: 65px"
+              ><p style="font-weight: 500">
+                Return window closed on date
+              </p></span
+            >
+            <span
+              style="color: black; position: absolute; top: 100px; left: 105px"
+            >
+              <a
+                style="
+                  padding: 10px;
+                  text-decoration: none;
+                  border: 2px solid #fad934;
+                  background: #fad934;
+                  border-radius: 5px;
+                  color: black;
+                "
+                href="#"
+                >Buy it again</a
+              >
+              <a
+                class="view-item"
+                style="
+                  padding: 10px;
+                  text-decoration: none;
+                  border: 2px solid #e6e6e6;
+                  border-radius: 5px;
+                  color: black;
+                "
+                href="/about-item/<%= item.product_id%>"
+                >View your item</a
+              >
+            </span>
+          </div>
+          <%}) %>
+        </div>
+
+        <div class="lower-inner-container">
+          <div style="padding: 10px">
+            <a class="a" href="#">Archive order</a>
+          </div>
+        </div>
+     
+        
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('layout/footer.ejs') %>

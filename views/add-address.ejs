@@ -1,0 +1,72 @@
+<%- include('layout/header.ejs') %>
+<h1><%= title%></h1>
+<div class="container container-lg">
+    <form class="product-form" method="POST" action="/add/address">
+        <div class="container container-lg">
+              <div class="col-md-6">
+                <input name="ids" id="idInput" type="hidden" />
+                <input
+                  type="text"
+                  class="form-control"
+                  name="firstname"
+                  id="inputPassword4"
+                  placeholder="First Name"
+                  required
+                />
+              </div>
+              <div class="col-md-6">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="lastname"
+                  id="inputPassword4"
+                  placeholder="Last Name"
+                  required
+                />
+              </div>
+              <!---->
+              <div class="col-12">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="phone_number"
+                  id="inputPassword4"
+                  placeholder="Phone Number"
+                  required
+                />
+              </div>
+    
+    
+               <div class="col-md-6">
+                  <label for="inputAddress" class="form-label">Address</label>
+                  <input
+                    type="text"
+                    name="address"
+                    class="form-control"
+                    id="inputAddress"
+                    placeholder="1234 Main St"
+                    required
+                  />
+                </div>
+               
+                <div class="col-md-6">
+                
+                        <label>Select</label>
+                        <select id="selectbox" class="selectpicker" data-live-search="true" name="country">
+                          <option value="">--Select country--</option>
+                          <%countries.forEach((item) => {%>
+                            <option value="<%= item.name%>"><%= item.name%></option>
+                          <%})%>
+                        </select>
+                </div>
+    
+              <div class="col-12">
+                <button id="submitBtn" type="submit" class="btn btn-primary">
+                  Add address
+                </button>
+              </div>
+          </div>
+    </form>
+</div>
+
+<%- include('layout/footer.ejs') %>

@@ -1,0 +1,64 @@
+<%- include('layout/header.ejs') %>
+<h1><%= title%></h1>
+<div class="contacts">
+    <div>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/account">Your account</a></li>
+            <li class="breadcrumb-item">
+              Your address  
+            </li>
+          </ol>
+        </nav>
+      </div>
+
+      <div style="display: grid; grid-template-columns: auto 32% 32%; 
+            grid-gap: 30px;">
+        <div style="border: 1px dotted; height: 250px; border-radius: 5px;">
+            <a href="/add-address" class="add-address">
+                <div>
+                    <div>+</div>
+                    <div>Add Address</div>
+                </div>
+            </a>
+        </div>
+        <% userAddress.forEach(item => {%>
+            <div style="border: 1px solid black; height: 250px;border-radius: 5px;">
+
+                    <h4 style="padding-left: 15px;padding-top: 10px;"><b><%= item.username %></b></h4>
+              
+                <ul style="margin: 0; list-style: none; padding-left: 15px;">
+                    <li class="list">Address: <%= item.address %></li>
+                    <li class="list">Phone number: <%= item.phone_number %></li>
+                    <li class="list">Firstname: <%= item.firstname %></li>
+                    <li class="list">Lastname: <%= item.lastname %></li>
+                    <li class="list">Country: <%= item.country %></li>
+                </ul>
+
+                <div style="display: grid;
+                grid-template-columns: 30% 35%;
+                padding-left: 15px;">
+                    <div><a class="aHref" href="/about-address/<%= item.id%>" data-addressId="<%= item.id%>">Edit-address</a></div>
+                    <div><a class="aHref delete_address" href="/about-address/<%= item.id%>" data-addressId="<%= item.id%>">Delete-address</a></div>
+                </div>
+                
+            </div>  
+        <%})%>
+      </div>
+
+  <!--<div class="form-controls">
+    <a href="/edit-user">edit-user</a>
+    <% userAddress.forEach(item => {%>
+            <div style="border: 1px solid black; height: 230px;border-radius: 5px;">
+                <div style="padding: 20px;">
+                    <h2> <%= item.username %></h2>
+                    <p><%= item.address %>,<%= item.phone_number %>,
+                    <%= item.payment_type %>,<%= item.firstname %>,
+                    <%= item.lastname %>,<%= item.country %></p>
+                </div>
+                
+            </div>  
+        <%})%>
+  </div>-->
+</div>
+<%- include('layout/footer.ejs') %>

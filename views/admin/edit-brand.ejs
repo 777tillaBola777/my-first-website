@@ -1,0 +1,19 @@
+<%- include('../layout/header.ejs') %>
+    <h1><%= title%></h1>
+    <form class="product-form" method="POST" action="/admin/brands/<%= getBrand.id %>">
+        <div class="form-controls">
+            <label for="name">Name</label>
+                <input id="name" name="brand" value="<%= getBrand.brands %>">
+        </div>
+  
+        
+        <div class="form-controls">
+            <button type="submit">Update</button>
+        </div>
+    </form>
+
+    
+   
+    
+    
+<%- include('../layout/footer.ejs') %>

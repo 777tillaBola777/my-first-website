@@ -1,0 +1,19 @@
+<%- include('layout/header.ejs') %>
+<h1><%= title%></h1>
+<div id="products-container pro-contain" class="list-container">
+  <div id="value_box">
+    <input name="ids" id="idInput" type="hidden" />
+  </div>
+  <div id="input_box">
+    
+  </div>
+  <button id="buttonSend" class="hidden">
+    <a href="/proceedToCheckOut">Proceed to Checkout</a>
+  </button>
+</div>
+<div class="block" id="noSign">
+  <h2>There is no product in the cart</h2>
+</div>
+
+<script src="/js/cart.js"></script>
+<%- include('layout/footer.ejs') %>

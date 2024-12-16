@@ -1,0 +1,40 @@
+<%- include('layout/header.ejs') %>
+<h1><%= title%></h1>
+<div class="contacts">
+  <ul>
+    <li>username: <%= locals.userExists?.username %></li>
+
+    <%if(locals.userExists?.isAdmin === 1){%>
+    <li>role: admin</li>
+    <%} else {%>
+    <li>role: user</li>
+    <%}%>
+  </ul>
+
+  <div class="form-controls">
+    <a style="padding: 15px;" href="/edit-user">edit-user</a>
+    <a style="padding: 15px;" href="/address">address</a>
+  </div>
+
+  <div style="display: grid; grid-template-columns: auto 32% 32%; 
+  grid-gap: 30px; padding-top: 30px;">
+<% userAddress?.forEach(item => {%>
+  <div style="border: 1px solid black; height: 260px;border-radius: 5px;">
+
+          <h2 style="padding-left: 15px;padding-top: 10px;"><%= item.username %></h2>
+    
+      <ul style="margin: 0; list-style: none; padding-left: 15px;">
+          <li class="list"><b style="font-size: 15px; padding-right: 15px;">Address:</b> <%= item.address %></li>
+          <li class="list"><b style="font-size: 15px; padding-right: 15px;">Phone number:</b> <%= item.phone_number %></li>
+          <li class="list"><b style="font-size: 15px; padding-right: 15px;">Firstname:</b> <%= item.firstname %></li>
+          <li class="list"><b style="font-size: 15px; padding-right: 15px;">Lastname:</b> <%= item.lastname %></li>
+          <li class="list"><b style="font-size: 15px; padding-right: 15px;">Country:</b> <%= item.country %></li>
+      </ul>    
+      <a style="padding: 15px; float: right;" href="/about-address/<%= item.id %>">edit-address</a>     
+  </div>  
+<%})%>
+</div>
+
+
+</div>
+<%- include('layout/footer.ejs') %>
