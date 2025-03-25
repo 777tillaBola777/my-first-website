@@ -23,5 +23,7 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Run Tests
-        run: npm timeout 30s npm run dev # Changed to use the test script
+      - name: Run Dev with Timeout
+        run: timeout 30s npm run dev
+        shell: bash
+      
