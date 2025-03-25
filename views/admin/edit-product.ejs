@@ -1,6 +1,6 @@
 <%- include('../layout/header.ejs') %>
     <h1><%= title%></h1>
-    <form class="product-form" method="POST" action="/admin/products/<%= locals.getPro.id %>">
+    <form class="product-form" method="POST" action="/admin/products/<%= locals.getPro?.id %>">
         <div>
         <div class="form-controls">
             <label for="name">Name</label>
@@ -13,7 +13,8 @@
                 <% types.forEach((item) => { %>
                     <%
                     let selectedType = ''
-                    if (getPro.type_id === item.id) {
+                    console.log(getPro.type_id, item.id)
+                    if (+getPro.type_id === +item.id) {
                         selectedType = 'selected'
                     }
                     %>

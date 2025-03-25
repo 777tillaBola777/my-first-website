@@ -367,7 +367,7 @@ dl dd {
 
 div a .pro-style {
     object-fit: cover;
-    width:  110%;
+    width:  100%;
     float: left;
     height: 200px;
     border-radius: 15px;

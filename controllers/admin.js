@@ -112,7 +112,7 @@ const types = async (req, res) => {
     massiveName[item.id] = item.type;
   });
 
-  
+  console.log("massiveName", massiveName);
   const userExists = await Users.userId(req?.session?.passport?.user);
 
   res.render("admin/types", {
@@ -160,8 +160,8 @@ const editProductPage = async (req, res) => {
   const types = await Products.loadTypes();
   const userExists = await Users.userId(req?.session?.passport?.user);
   const productFields = await Products.getProductFields(req.params.productId);
-  const getPro = await Products.getProduct(req.params.productId)
-  console.log('fields',productFields)
+  const getPro = await Products.getProduct(req.params?.productId)
+  console.log('fields',req.params?.productId)
   res.render("admin/edit-product", {
     title: "Edit product form",
     menu: menuItems,

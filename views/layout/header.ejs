@@ -103,12 +103,12 @@
             <ul class="nav">
               <% menu.forEach((item) => { %> 
                 <% if (item.url.match(/^\/admin\//)) { %> 
-                  <% if (locals.userExists?.isAdmin === 1) { %>
+                  <% if (+locals.userExists?.isAdmin === 1) { %>
                     <li class="nav-item">
                       <a class="navbar-link" href="<%= item.url %>"><%= item.name %></a>
                     </li>
                   <% } %> 
-                <% } else if(item.name === 'Products' && locals.userExists?.isAdmin === 1) {%>
+                <% } else if(item.name === 'Products' && +locals.userExists?.isAdmin === 1) {%>
                   <li class="nav-item">
                     <a class="navbar-link" href="/admin<%= item.url %>"
                       ><%= item.name %></a>
@@ -145,7 +145,7 @@
                 <a class="navbar-link" href="#">Pages</a>
               </li>
               <li class="nav-item">
-                <% if (locals?.userExists?.isAdmin === 1) { %>
+                <% if (+locals?.userExists?.isAdmin === 1) { %>
                   <% console.log('admin', locals.keyword) %>
                   <form class="d-flex" id="search_form" role="search" method="GET" action="/admin/products">
                     <input 

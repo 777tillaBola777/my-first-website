@@ -16,8 +16,8 @@
                         <option value="">-----Tanla-----</option>
                         <option value="price high" <%if(locals.sortby === 'price high') {%> selected <%}%>>Price: High to low </option>
                         <option value="price low" <%if(locals.sortby === 'price low') {%> selected <%}%>>Price: Low to high</option>
-                        <option value="created high" <%if(locals.sortby === 'created high') {%> selected <%}%>> Newest product</option>  
                         <option value="seen high" <%if(locals.sortby === 'seen high') {%> selected <%}%>> Popular</option>  
+                        <option value="created high" <%if(locals.sortby === 'created high') {%> selected <%}%>> Newest product</option>  
                     </select>
                 </div>
               </div>
@@ -25,7 +25,7 @@
         <% products.forEach((item) => { %>
             <tr>
                 <td><%= item.name %></td>
-                <td><img src="<%= item.image %>"></td>
+                <td><img style="width: 100px;" src="<%= item.image %>"></td>
                 <td>
                     <a href="/admin/products/<%= item.id%>">Edit</a>
                     <a href="/admin/products/<%= item.id%>" data-productId="<%= item.id%>" class="delete-button">Delete</a>

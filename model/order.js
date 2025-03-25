@@ -6,17 +6,14 @@ const datetime = require('../helpers/datetime')
 
 module.exports = class orders {
 
-    constructor(  ids, payment_type, consumer_id,taking_form, status) {
+    constructor(  ids, payment_type, consumer_id,taking_form, status, id) {
         this.ids = ids
         this.payment_type = payment_type
         this.consumer_id = consumer_id
         this.taking_form = taking_form
         this.status = status
         this.products = []
-    }
-
-    addProduct(product) {
-        this.products.push(product)
+        this.id = id
     }
 
     async save() {
@@ -59,16 +56,16 @@ module.exports = class orders {
         if (!this.id) {
             throw 'Order is not saved'
         }
-        return await db.execute('INSERT INTO own_work.ordered_products (order_id,name,price,image,description, type_id, created, count,product_id) VALUES (?,?,?,?,?,?,?,?,?)', [
-            this.id,
+        return await db.execute('INSERT INTO own_work.ordered_products (name,price,image,description, type_id, created, count,product_id, order_id) VALUES (?,?,?,?,?,?,?,?,?)', [  // Use this.id here, which is the correct order reference
             product.name,
             product.price,
             product.image,
-            product.description, 
+            product.description,
             product.type_id,
             product.created,
             count,
-            product.id
+            product.id,
+            this.id
         ])
     }
 

@@ -4,7 +4,7 @@
   <ul>
     <li>username: <%= locals.userExists?.username %></li>
 
-    <%if(locals.userExists?.isAdmin === 1){%>
+    <%if(+locals.userExists?.isAdmin === 1){%>
     <li>role: admin</li>
     <%} else {%>
     <li>role: user</li>

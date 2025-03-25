@@ -273,7 +273,7 @@ function getSortCriteria(sortBy='') {
 }
 
 async function getChosenProduct(productId){
-    const qiymat = db.execute(`SELECT * FROM pro.products where id=?;`, [productId])
+    const qiymat = db.execute(`SELECT * FROM own_work.products where id=?;`, [productId])
     if(qiymat[0]){
         return qiymat[0]
     }
@@ -352,7 +352,7 @@ function getTypeChildren(types, typeId, ancentors) {
 }
 
 async function addBrand(brand){
-    const val = `INSERT INTO pro.brands (brands) VALUES (${brand});`
+    const val = `INSERT INTO own_work.brands (brands) VALUES (${brand});`
     const qiymat = await db.execute(val)
     if(qiymat[0]){
         return qiymat[0]

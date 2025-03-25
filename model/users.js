@@ -278,8 +278,8 @@ module.exports = class Users{
 
 
     static async updateUserType(isAdmin,note,blocked, id){
-        const result = await db.execute('UPDATE own_work.users SET isAdmin = ?, note = ?, blocked = ? WHERE id =?;', [isAdmin,note,blocked, id])
         console.log(`UPDATE own_work.users SET isAdmin = ${isAdmin}, note = ${note}, blocked = ${blocked} WHERE id =${id};`)
+        const result = await db.execute('UPDATE own_work.users SET isAdmin = ?, note = ?, blocked = ? WHERE id =?;', [isAdmin,note,blocked, id])
         if(result[0]){
             return result[0]
 

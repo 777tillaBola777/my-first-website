@@ -161,7 +161,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
   });
   
   passport.deserializeUser(async function (userId, done) {
-    const result = await db.execute("SELECT * FROM pro.users WHERE id = ?", [
+    const result = await db.execute("SELECT * FROM own_work.users WHERE id = ?", [
       userId,
     ]);
   

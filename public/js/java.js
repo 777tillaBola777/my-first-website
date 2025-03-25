@@ -468,3 +468,16 @@ for (deleteFields of deleteFieldBtn) {
         }*/
   });
 }
+
+const type = document.getElementById("type");
+const take = document.getElementById("take");
+const statusBox = document.getElementById("statusBox");
+const resetStatusBtn = document.getElementById("resetStatusBtn");
+const orderSubmitForm = document.getElementById("orderSubmit");
+console.log(resetStatusBtn, type, take, statusBox);
+resetStatusBtn?.addEventListener("click", (e) => {
+  type.value = "";
+  take.value = "";
+  statusBox.value = "";
+  orderSubmitForm.submit();
+});

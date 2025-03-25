@@ -68,12 +68,13 @@ module.exports = class Consumers{
         return null
     }
 
-    static async doesExist(phoneNumber) {
-        const result = await db.execute('SELECT * FROM own_work.consumers WHERE phone_number = ?',[
-            phoneNumber
-        ]) 
-        //console.log('con',result)
-        if(result[0][0]?.id){
+    static async doesExist(firstname, lastname, phoneNumber) {
+        const result = await db.execute(
+            'SELECT * FROM own_work.consumers WHERE firstname = ? AND lastname = ? AND phone_number = ?',
+            [firstname, lastname, phoneNumber]
+        ); 
+    
+        if (result[0][0]?.id) {
             const consumer = new Consumers(
                 result[0][0].firstname, 
                 result[0][0].lastname, 
@@ -81,14 +82,14 @@ module.exports = class Consumers{
                 result[0][0].country,
                 result[0][0].city,
                 result[0][0].zip
-            )
-            consumer.setId(result[0][0].id)
-            
-            return consumer
+            );
+            consumer.setId(result[0][0].id);
+            return consumer;
         }
-        console.log('consumer')
-        return null
+        
+        return null;
     }
+    
 
     static async getConsumer(id) {
         const result = await db.execute('SELECT * FROM own_work.consumers WHERE id = ?',[

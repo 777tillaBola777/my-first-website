@@ -352,7 +352,7 @@ module.exports = class Product {
         console.log('before findById db exec')
         const result = await db.execute('SELECT p.*,t.type FROM own_work.products p JOIN own_work.types t ON p.type_id=t.id WHERE p.id=?', [productId])
         console.log('after findById bd exec')
-        //console.log(result)
+        console.log(result)
         if (result[0][0]) {
             return result[0][0]
         }

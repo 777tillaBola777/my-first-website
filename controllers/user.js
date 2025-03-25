@@ -34,7 +34,7 @@ const {
   const passport = require("passport");
   
   const homePage = async (req, res) => {
-    const productsByType = [3, 16, 17, 20, 23];
+    const productsByType = [2,3,4,5,8];
     const queryParams = [
       {
         name: "type_id",
@@ -104,7 +104,7 @@ const {
   
       //const getUser = await Consumers.addOrderUser(user)
   
-      let consumer = await Consumers.doesExist(req.body.phone_number);
+      let consumer = await Consumers.doesExist(req.body.firstname, req.body.lastname, req.body.phone_number);
   
       if (!consumer?.id) {
         consumer = new Consumers(
@@ -122,22 +122,25 @@ const {
       }
   
       
-  
+      if (!req.body.ids) {
+        console.log('ids',req?.body?.ids)
+        throw new Error("Missing or invalid 'ids' field in request body.");
+      }
       const productAbout = JSON.parse(req.body.ids);
       let ids = [];
       let count = [];
-  
+      console.log("ids", productAbout);
       productAbout.products.forEach((element) => {
         ids.push(element.id);
         count.push(element.quantity);
       });
-  
+      console.log("ids", ids);
       //const idValue = consumer.setId(getUser[0].insertId)
       //const b = consumer.save(user)
       //console.log('idlar qiymatlari',getUser[0].insertId, req.body.firstname, req.body.lastname, req.body.phone_number)
   
       const order = new Order(
-        null,
+        ids,
         req.body.payment_type,
         consumer.id,
         req.body.taking_form,
@@ -145,18 +148,17 @@ const {
       );
   
       //console.log(order)
-      await order.save();
-  
-      const product = new Product(ids);
+      const orderResult = await order.save();
+      order.id = orderResult.insertId; // ✅ Set order ID after saving
+      console.log('order',order)
       //2007010420000127*20021405
       //console.log('qimat2222222222',consumerDetails)
       const getChosenPro = await Product.getById(ids);
-      getChosenPro.forEach(async (item, index) => {
-        const product = await order.addProduct(item, count[index]);
-        console.log("Consumer id is exist", product);
-        return product.id;
-        
-      });
+      console.log("ids", getChosenPro, count);
+      // ✅ Now order.id exists, and we can safely add products
+      for (let index = 0; index < getChosenPro.length; index++) {
+        await order.addProduct(getChosenPro[index], count[index]);
+    }
   
       // Haridor ma'lumoti qo'shitiladi
       //
@@ -288,7 +290,7 @@ const {
     const userExists = await Users.userId(req?.session?.passport?.user);
     const userAddress = await Users.authenticateUser(req?.session?.passport?.user)
   
-    ///console.log("produc", userAddress);
+    console.log("produc", userExists);
     res.render("account", {
       title: "Profile",
       users: users,
@@ -370,7 +372,7 @@ const {
   
     try {
       const product = await Product.findById(req.params.productId);
-      let number = product[0].seen + 1;
+      let number = +product[0].seen + 1;
       const insertViewValue = await Product.insertViewValue(
         number,
         req.params.productId

@@ -7,15 +7,14 @@
     <div style="padding: 0; height: 100%;">
         <div class="product-div">
             <%productsByTypes.forEach((item, index) => {%>
-                <%if(element.id === item.type_id){%>
-          
+                <%if(+element.id === +item.type_id){%>
                     <div class="form-controls">
                         <div>
                             <a class="a-href" href="/about-item/<%= item.id%>"><%= item.name %></a>
                         </div>
                         <div>
                             <a href="/about-item/<%= item.id%>">
-                              <%if(item.featured.length > 0){%>
+                              <%if(item.featured?.length > 0){%>
                                 <div class="featured"><%= item.featured %></div>
                                 <%}%>
                                 <img class="pro-style" src="<%= item.image %>"/>

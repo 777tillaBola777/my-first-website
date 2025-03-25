@@ -1,6 +1,6 @@
 <%- include('../layout/header.ejs') %>
     <h1><%= title%> </h1>
-<form method="GET" action="/admin/orderPage">
+<form id="orderSubmit" method="GET" action="/admin/orderPage">
     <div class="select-grid">
         <div>
             <select name="payment_type" id="type">
@@ -28,6 +28,7 @@
         </div>
     </div>
     <button type="submit">submit</button>
+    <button id="resetStatusBtn" type="button">reset</button>
 </form>
 
 <table class="table table-striped">

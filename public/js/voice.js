@@ -44,5 +44,5 @@ if (SpeechRecognition) {
         alert("Error: " + event.error);
     });
 } else {
-    alert("Sorry, your browser does not support Speech Recognition.");
+    console.log("Sorry, your browser does not support Speech Recognition.");
 }
