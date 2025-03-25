@@ -24,4 +24,4 @@ jobs:
         run: npm install
 
       - name: Run Dev
-        run: npm dev
+        run: npm run dev
