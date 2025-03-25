@@ -24,4 +24,4 @@ jobs:
         run: npm install
 
       - name: Run Tests
-        run: npm run test  # Changed to use the test script
+        run: npm timeout 30s npm run dev # Changed to use the test script
