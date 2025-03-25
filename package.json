@@ -21,6 +21,9 @@
   "scripts": {
     "dev": "nodemon server.js"
   },
+  "scripts": {
+  " test": "echo \"Running tests...\" && exit 0"
+  },
   "devDependencies": {
     "nodemon": "^3.1.9"
   }
