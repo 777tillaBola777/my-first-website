@@ -19,10 +19,8 @@
     "stripe": "^17.3.1"
   },
   "scripts": {
-    "dev": "nodemon server.js"
-  },
-  "scripts": {
-  " test": "echo \"Running tests...\" && exit 0"
+    "dev": "nodemon server.js",
+    " test": "echo \"Running tests...\" && exit 0"
   },
   "devDependencies": {
     "nodemon": "^3.1.9"
